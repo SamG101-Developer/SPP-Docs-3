@@ -59,10 +59,16 @@ S++ aims to solve a number of problems other languages have, whether it be synta
 **Consistent Naming**
 - Problem: Lots of languages use a mix of cases and underscores for naming, such as `str` and `String` in Rust, and
   `camelCase` and `snake_case` in Python.
-- Solution: In S++, all types are PascalCase, and all other identifiers (method, variables
-  etc) must use snake_case. This is done by:
+- Solution: In S++, all types are PascalCase, and all other identifiers (method, variables etc) must use `snake_case`,
+  [which has increased readability](https://www.cs.kent.edu/~jmaletic/papers/ICPC2010-CamelCaseUnderScoreClouds.pdf) compared to `camelCase`. This is done by:
 
-| Identifier Type | Regex               |
-|-----------------|---------------------|
-| UpperIdentifier | `[A-Z][a-zA-Z0-9]*` |
-| LowerIdentifier | `[a-z][a-z0-9_]*`   |
+| Identifier Type | Case         | Regex               |
+|-----------------|--------------|---------------------|
+| UpperIdentifier | `PascalCase` | `[A-Z][a-zA-Z0-9]*` |
+| LowerIdentifier | `snake_case` | `[a-z][a-z0-9_]*`   |
+
+**Semicolon rules**
+- Problem: Rust uses optional semicolons to determine if a value is being returned or if it is a statement. This means
+  that omitting a semicolon can change the meaning of the code.
+- Solution: S++ uses Python's approach of using newlines to terminate statements. Semicolons are syntactically not
+  allowed: they're not even optional like JavaScript. This also reduces syntactic noise.
