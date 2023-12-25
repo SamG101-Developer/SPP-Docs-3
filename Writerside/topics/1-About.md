@@ -34,3 +34,35 @@ behaviour of classes are separated: state is stored in the `cls` block, with any
 defined in superimposition `sup` blocks. As well as method being definable in `sup` blocks, entire classes can be
 superimposed over a class, using the `sup Copy on Str` syntax. This allows for behaviour similar to multiple
 inheritance, but with the flexibility to remove entire classes from the superimposition.
+
+**FP**: S++ has first class functions, that are one of `FunRef, FunMut, FunOne` types. Functions are able to be passed
+around as arguments, and returned from other functions. Functions are also able to be stored in variables, and called
+from those variables. This allows for a functional style of programming. Closures that capture variables are also
+subject to certain memory-related rules in terms of how they can be passed around.
+
+**Immutability**: S++ encourages immutability, with all variables being immutable by default. This is achieved by the
+`let` keyword being used to declare variables, with the `mut` keyword additionally being used to declare a variable as
+mutable. This is a feature taken from Rust directly.
+
+## Why S++?
+
+S++ aims to solve a number of problems other languages have, whether it be syntactic, semantic, or performance related.
+
+**Generics**:
+- Problem: Traditionally, using `<...>` for generic parameters overcomplicates the parser, and forces strange syntax to
+  be used, such as the `::<>` turbofish syntax in Rust. This is because types can be lowercase like variables, and there
+  is an ambiguity between generic parameters and comparisons. Whilst S++ doesn't have this ambiguity, because types are
+  in PascalCase, it still uses `[]` for generic parameters, as the `[]` is more readable.
+- Solution: Use `[]` for generic parameters and arguments. Because all types in S++ require PascalCase, there is no
+  ambiguity between generic parameters and array indexing, if array indexing was to be added in the future.
+
+**Consistent Naming**
+- Problem: Lots of languages use a mix of cases and underscores for naming, such as `str` and `String` in Rust, and
+  `camelCase` and `snake_case` in Python.
+- Solution: In S++, all types are PascalCase, and all other identifiers (method, variables
+  etc) must use snake_case. This is done by:
+
+| Identifier Type | Regex               |
+|-----------------|---------------------|
+| UpperIdentifier | `[A-Z][a-zA-Z0-9]*` |
+| LowerIdentifier | `[a-z][a-z0-9_]*`   |
