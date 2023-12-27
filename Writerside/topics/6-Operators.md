@@ -22,13 +22,13 @@
 - Operators of the same precedence are always evaluated left-to-right, except `**`.
 
 ## Assignment
-- There is single-assignment (1-assignment) and multi-assignment (n-assignment).
+- There is single-assignment and multi-assignment.
 - Assignment is a statement, not an expression.
 - Assignment returns a `Void` value, so cannot be used on the RHS of another assignment.
 
 
-### 1-assignment
-#### 1-assignment example
+### Single assignment
+#### Single assignment example
 ```s++
 fun main() -> Void {
     let mut x = 1
@@ -36,8 +36,8 @@ fun main() -> Void {
 }
 ```
 
-### n-assignment
-#### n-assignment example
+### Multi assignment
+#### Multi assignment example
 ```s++
 fun main() -> Void {
     let mut x = 1
@@ -68,7 +68,7 @@ fun main() -> Void {
 | `>>=`    | Bitwise shift the left object by the right object                |
 | `<<<=`   | Bitwise rotate the left object by the right object               |
 | `>>>=`   | Bitwise rotate the left object by the right object               |
-- Compound assignment can only be used with [single assignment](#1-assignment).
+- Compound assignment can only be used with [single assignment](#single-assignment).
 
 ### Compound assignment overload classes
 - By default, `Rhs` and `Out` are `Self`, so are not required to be specified.
