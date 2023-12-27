@@ -5,15 +5,15 @@
 
 ## Operator Precedence
 
-| Precedence             | Type                         | Operators                                                                                          |
-|------------------------|------------------------------|----------------------------------------------------------------------------------------------------|
-| 0 (lowest precedence)  | Assignment                   | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `\|\|=`, `\|=`, `&&=`, `&=`, `^=`, `<<=`, `>>=`, `<<<=`, `>>>=` | 
-| 1                      | Logical or                   | `\|\|`                                                                                             |
-| 2                      | Logical and                  | `&&`                                                                                               |
-| 3                      | Comparisons                  | `==`, `!=`, `<`, `<=`, `>`, `>=`, `<=>`                                                            |
-| 4                      | Bit shifting                 | `<<`, `>>`, `<<<`, `>>>`                                                                           |
-| 5                      | Math-/bitwise-additive       | `+`, `-`, `\|`, `^`                                                                                |
-| 6 (highest precedence) | Math-/bitwise-multiplicative | `*`, `/`, `%`, `&`                                                                                 |
+| Precedence (Lo -> Hi) | Type                         | Operators                                                                                          |
+|-----------------------|------------------------------|----------------------------------------------------------------------------------------------------|
+| 0                     | Assignment                   | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `\|\|=`, `\|=`, `&&=`, `&=`, `^=`, `<<=`, `>>=`, `<<<=`, `>>>=` | 
+| 1                     | Logical or                   | `\|\|`                                                                                             |
+| 2                     | Logical and                  | `&&`                                                                                               |
+| 3                     | Comparisons                  | `==`, `!=`, `<`, `<=`, `>`, `>=`, `<=>`                                                            |
+| 4                     | Bit shifting                 | `<<`, `>>`, `<<<`, `>>>`                                                                           |
+| 5                     | Math-/bitwise-additive       | `+`, `-`, `\|`, `^`                                                                                |
+| 6                     | Math-/bitwise-multiplicative | `*`, `/`, `%`, `&`                                                                                 |
 
 - Simplifies the precedence / less to remember
 - The `&&` and `\|\|` operators are short-circuiting.
