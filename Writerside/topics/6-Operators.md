@@ -49,30 +49,29 @@ fun main() -> Void {
 - The number of variables on the LHS must match the number of values on the RHS.
 
 ### Compound assignment
-| Operator | Description                                                      |
-|----------|------------------------------------------------------------------|
-| `=`      | Assign the right object to the left object                       |
-| `+=`     | Add the right object to the left object                          |
-| `-=`     | Subtract the right object from the left object                   |
-| `*=`     | Multiply the left object by the right object                     |
-| `/=`     | Divide the left object by the right object                       |
-| `%=`     | Get the remainder of the left object divided by the right object |
-| `%%=`    | Get the modulo of the left object divided by the right object    |
-| `**=`    | Get the power of the left object by the right object             |
-| `\|\|=`  | Logical or the left object with the right object                 |
-| `\|=`    | Bitwise or the left object with the right object                 |
-| `&&=`    | Logical and the left object with the right object                |
-| `&=`     | Bitwise and the left object with the right object                |
-| `^=`     | Bitwise xor the left object with the right object                |
-| `<<=`    | Bitwise shift the left object by the right object                |
-| `>>=`    | Bitwise shift the left object by the right object                |
-| `<<<=`   | Bitwise rotate the left object by the right object               |
-| `>>>=`   | Bitwise rotate the left object by the right object               |
+| Operator | Description                                                         |
+|----------|---------------------------------------------------------------------|
+| `=`      | Assign the right object to the left object                          |
+| `+=`     | Add the right object to the left object                             |
+| `-=`     | Subtract the right object from the left object                      |
+| `*=`     | Multiply the left object by the right object                        |
+| `/=`     | Divide the left object by the right object                          |
+| `%=`     | Assign the remainder of the left object divided by the right object |
+| `%%=`    | Assign the modulo of the left object divided by the right object    |
+| `**=`    | Assign the left object to the power of the right object             |
+| `\|\|=`  | Logical or the left object with the right object                    |
+| `\|=`    | Bitwise or the left object with the right object                    |
+| `&&=`    | Logical and the left object with the right object                   |
+| `&=`     | Bitwise and the left object with the right object                   |
+| `^=`     | Bitwise xor the left object with the right object                   |
+| `<<=`    | Bitwise shift the left object by the right object                   |
+| `>>=`    | Bitwise shift the left object by the right object                   |
+| `<<<=`   | Bitwise rotate the left object by the right object                  |
+| `>>>=`   | Bitwise rotate the left object by the right object                  |
 - Compound assignment can only be used with [single assignment](#single-assignment).
 
 ### Compound assignment overload classes
-- By default, `Rhs` and `Out` are `Self`, so are not required to be specified.
-- Class and function names are currently subject to change.
+- The generic parameters `Rhs` and `Out` default to `Self`, so are not required to be specified.
 - The statement `x += 1` is equivalent to `x.add_assign(1)`.
 - The standard `=` operator **can not** be overloaded.
 
