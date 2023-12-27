@@ -8,17 +8,17 @@
 ### Where blocks are used (exhaustive list)
 - A block will be referred to as the type `Block[T]` where `T` is the type of the item in the block.
 
-| Where           | Block type              | Explanation                                                                    |
-|-----------------|-------------------------|--------------------------------------------------------------------------------|
-| `if` expression | `Block[Pattern]`        | The `if` expression requires blocks of pattern blocks to form its body.        |
-| pattern blocks  | `Block[Statement]`      | The "pattern" expression requires a block of statements to form its body.      |
-| `while`         | `Block[Statement]`      | The `while` expression requires a block of statements to form its body.        |
-| `while-else`    | `Block[Statement]`      | The `while-else` expression requires a block of statements to form its body.   |
-| `fun`           | `Block[Statement]`      | The `fun` definition requires a block of statements to form its body.          |
-| `let-else`      | `Block[Statement]`      | The `let-else` expression requires a block of statements to form its body.     |
-| inner scope     | `Block[Statement]`      | An inner scope is a block.                                                     |
-| `cls`           | `Block[ClassAttribute]` | A class definition requires a block of class attributes to form its body.      |
-| `sup`           | `Block[SupMember]`      | A superimposition block requires a block of methods/typedefs to form its body. |
+| Where              | Block type              | Explanation                                                                    |
+|--------------------|-------------------------|--------------------------------------------------------------------------------|
+| `if` expression    | `Block[Pattern]`        | The `if` expression requires blocks of pattern blocks to form its body.        |
+| pattern blocks     | `Block[Statement]`      | The "pattern" expression requires a block of statements to form its body.      |
+| `while` expression | `Block[Statement]`      | The `while` expression requires a block of statements to form its <br/>body.   |
+| `while-else` block | `Block[Statement]`      | The `while-else` expression requires a block of statements to form its body.   |
+| `fun` block        | `Block[Statement]`      | The `fun` definition requires a block of statements to form its body.          |
+| `let-else` block   | `Block[Statement]`      | The `let-else` expression requires a block of statements to form its body.     |
+| inner scope        | `Block[Statement]`      | An inner scope is a block.                                                     |
+| `cls` block        | `Block[ClassAttribute]` | A class definition requires a block of class attributes to form its body.      |
+| `sup` block        | `Block[SupMember]`      | A superimposition block requires a block of methods/typedefs to form its body. |
 
 ### Returning from blocks (for assignment)
 - If a block is being used for assignment (as en expression), then the final statement of the block is returned.
