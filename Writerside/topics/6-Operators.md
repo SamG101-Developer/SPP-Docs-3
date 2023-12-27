@@ -12,12 +12,12 @@
 | 2                     | Logical or                   | `\|\|`                                                                                                          |
 | 3                     | Logical and                  | `&&`                                                                                                            |
 | 4                     | Comparisons                  | `==`, `!=`, `<`, `<=`, `>`, `>=`, `<=>`, `is`                                                                   |
-| 5                     | Bit shifting                 | `<<`, `>>`, `<<<`, `>>>`                                                                                        |
+| 5                     | Bit shifting/rotating        | `<<`, `>>`, `<<<`, `>>>`                                                                                        |
 | 6                     | Math-/bitwise-additive       | `+`, `-`, `\|`, `^`                                                                                             |
 | 7                     | Math-/bitwise-multiplicative | `*`, `/`, `%`, `%%`, `**` `&`                                                                                   |
 
 - Simplifies the precedence / less to remember
-- The `&&` and `\|\|` operators are short-circuiting.
+- The `&&` and `||` operators are short-circuiting.
 - Fixes the precedence issue in C-based languages of `&` lower a higher precedence than comparison operators.
 - Operators of the same precedence are always evaluated left-to-right, except `**`.
 
