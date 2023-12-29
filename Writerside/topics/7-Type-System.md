@@ -1,5 +1,16 @@
 # 7 - Type System
 
+## Contents
+- [Overview](#overview)
+- [Primitives](#primitives)
+- [Type inference](#type-inference)
+- [Aliasing](#aliasing)
+- [Namespace reduction](#namespace-reduction)
+- [Booleans](#booleans)
+- [Strings](#strings)
+- [Numbers](#numbers)
+- [Arrays](#arrays)
+
 ## Overview
 - Static & strong type-system is enforced, ensuring maximum safety.
 - Heavy type-inference is used to reduce semantic noise in the coded.
@@ -11,6 +22,71 @@
 - There are no primitive types like C++'s `int`, `float` etc, or Rust's `i32`, `f64` etc.
 - The equivalent types are classes and are compile-known, however, and have some special behaviour.
 - The class names are `[U|I|F][8|16|32|64|128]`, and `Bool`.
+
+## Type inference
+- Type inference is extremely powerful: every rhs expression can be inferred.
+- Type inference is used to reduce syntactic noise in the code.
+- IDE's will have functionality to reveal the type on hovering over an identifier etc.
+
+### Where type hints are required (exhaustive list)
+- Function parameters: the exact signature of a functions must be known for overload selection.
+- Function return type: the compiler must know what every function returns at compile time for RHS inference.
+- Attribute types: for member access into a type, the compiler must know the type of every attribute.
+- Uninitialized variables: uninitialized variables' types must be known for type-checking on assignment.
+
+### Type annotations
+- To provide a type annotation in any context where are identifier is declared, use `: [Type]`
+- The exception is the function return type, which follows a `->` token
+- For example, `fun function(a: Str, b: Str) -> Str { }`
+
+| Statement            | Legal? | Reason                                                                 |
+|----------------------|--------|------------------------------------------------------------------------|
+| `let var: Str = "1"` | No     | The RHS is inferred as a `Num`, so the type annotation is unnecessary. |
+| `let var: Str`       | Yes    | The RHS can not be inferred, so the type annotation is necessary.      |
+| `let var = 1`        | Yes    | The RHS can be inferred, so the type annotation is not necessary.      |
+
+### Inference rules
+| RHS Expression Type               | How inference works                                               |
+|-----------------------------------|-------------------------------------------------------------------|
+| `<LiteralNumber>`                 | `BigNum \| BigDec`                                                |
+| `<LiteralBoolean>`                | `Bool`                                                            |
+| `<LiteralString>`                 | `Str`                                                             |
+| `<LiteralArray>`                  | `Arr[Str]`                                                        |
+| `<LiteralTuple>`                  | `Tup[Str]`                                                        |
+| `<LiteralRegex>`                  | `Rgx`                                                             |
+| `<Lambda>`                        | See [closure inference]()                                         |
+| `<ParenthesizedExpressioj>`       | Infers the type of `some_expression` and uses that.               |
+| `<IfExpression>`                  | Infers the final statement of each pattern block.                 |
+| `<WhileExpression>`               | Cannot be used on the RHS of an expression.                       |
+| `<YieldExpression>`               | Uses the `[Send]` generic parameter from `Gen[...]`.              |
+| `<InnerScope>`                    | Infers the final statement of the inner scope.                    |
+| `<WithExpression>`                | Infers the final statement of the block.                          |
+| `<SelfKeyword>`                   | Infers the type of the current class (symbol table).              |
+| `<VariadicOperator>`              | See [tuple variadic operator]().                                  |
+| `<PostfixStructInitialization>`   | The type is the struct being initialized.                         |
+| `<PostfixExpressionFunctionCall>` | Gets the correct overload and gets the return type.               |
+| `<PostfixExpressionMemberAccess>` | Gets the type of the attribute (symbol table).                    |
+| `<PostfixExpressionEarlyReturn>`  | Gets the return type of the function (symbol table).              |
+| `<BinaryExpression>`              | Convert's to a regular function call, and infers the return type. |
+- Recursive inference is used to algorithmically determine the type of the RHS.
+
+## Aliasing
+- Aliasing is when a type is given a new name, and can be used interchangeably with the original type.
+- Aliasing is done using the `use` keyword, and is only allowed for types.
+- Aliasing is useful for shortening long type names (and namespaces), and for creating type aliases for generic 
+  parameters.
+
+### Aliasing syntax
+- The syntax for aliasing is `use OldName as NewName`.
+
+## Namespace reduction
+- Namespace reduction is similar to aliasing, but is used to reduce the length of a namespace, and doesn't require an 
+  alias.
+- Namespace reduction is done using the `use` keyword.
+
+### Namespace reduction syntax
+- The syntax for namespace reduction is `use a.b.c.{d.e.F as G, H, I as J}`.
+- To use everything from a namespace, use `use a.b.c.*`.
 
 ## Booleans
 - The `Bool` type is the only boolean type in S++.
