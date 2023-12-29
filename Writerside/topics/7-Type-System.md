@@ -12,9 +12,7 @@
 - The equivalent types are classes and are compile-known, however, and have some special behaviour.
 - The class names are `[U|I|F][8|16|32|64|128]`, and `Bool`.
 
-## Common Types
-
-### Booleans
+## Booleans
 - The `Bool` type is the only boolean type in S++.
 - The keywords `true` and `false` are the 2 singleton instances of the `Bool` class (program long lifetime).
 - The `Bool` class is a direct mapping to `LLVM`'s `bool` type.
@@ -24,31 +22,31 @@
 - The tye semantics work the same as a `Copy`-superimposed type.
 - The backend uses the `LLVM` `bool` type to store the `Bool` class.
 
-### Strings
+## Strings
 - The `Str` type is the only string type in S++.
 - It wraps a generic type that superimposed `std.backend.str.StrBackendAbtract` to provide the backend functionality.
 - Variants of `std.backend.str.StrBackendAbtract` are `StrBackendRope` and `StrBackendVec`.
 - The `Str` class calls multiple "core functions" of the backend class being abstracted over.
 
-### Numbers
-#### Number base literals
-###### Base 10:
+## Numbers
+### Number base literals
+#### Base 10:
 - Additive prefix: `[-|+]`
 - Integer part: `[0-9]+`
 - Decimal part: `(\.[0-9]+)?`
 - Number type suffix: `_[u|f|i][8|16|32|64|128]`
 
-###### Base 16:
+#### Base 16:
 - Literal prefix: `0x`
 - Integer part: `[0-9a-fA-F]+`
 - Number type suffix: `_[u|f|i][8|16|32|64|128]`
 
-###### Base 2:
+#### Base 2:
 - Literal prefix: `0b`
 - Integer part: `[0-1]+`
 - Number type suffix: `_[u|f|i][8|16|32|64|128]`
 
-#### Types of numbers
+### Types of numbers
 - There are different number types for different sizes, signedness, and precision, all compiler-known.
 - The number types are `_[U|I|F][8|16|32|64|128]` (LLVM-mapped), and `BigNum` and `BigDec`.
 - By default, `BigNum` and `BigDec` are used for numeric literals, but suffixes can be used to specify the type.
@@ -74,20 +72,20 @@
 | `BigNum` | No limit    | Yes     | -∞                                           | +∞                                          | No limit         |
 | `BigDec` | No limit    | Yes     | -∞                                           | +∞                                          | No limit         |
 
-#### Number type suffixes
+### Number type suffixes
 - The suffixes are used to specify the type of the number.
 - No suffix means the number is a `BigNum` or `BigDec` (checks decimal part).
 - `u<number>` suffix means the number is a `U*` type, where `*` is the number.
 - `i<number>` suffix means the number is a `I*` type, where `*` is the number.
 - `f<number>` suffix means the number is a `F*` type, where `*` is the number.
 
-### Arrays
+## Arrays
 - Arrays are the lowest level collection type in S++, like C++'s `T[]`.
 - They array type is `std.Arr[T]`, where `T` is the type of the elements.
 - They are fixed size and safely abstract over LLVM's array type.
 - They are bounds checked for memory safety.
 
-#### Creating arrays
+### Creating arrays
 ###### Array literals
 
 | Array type    | Syntax              |
@@ -104,7 +102,7 @@
 | 0 elements    | `let x = std.Arr[Num].new()`   |
 - For `>= 1` elements, the type is inferred from the elements.
 
-#### General API
+### General API
 ```s++
 cls Arr[T] {
     @private data: std.c.CArr[T]
