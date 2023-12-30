@@ -7,6 +7,7 @@
 - [Aliasing](#aliasing)
 - [Namespace reduction](#namespace-reduction)
 - [Casting](#casting)
+- [Generics](#generics)
 - [Booleans](#booleans)
 - [Strings](#strings)
 - [Numbers](#numbers)
@@ -180,11 +181,44 @@ fun main() -> Void {
 ### Generic constraints
 - Short-hand or long-hand syntax can be used for generic constraints.
 
-| Where used | Effect of constraint                                                           |
-|------------|--------------------------------------------------------------------------------|
-| `cls`      | Class can only be instantiated with satisfied constraints                      |
-| `fun`      | Function can only be called with satisfied constraints (in overload selection) |
-| `sup`      | The superimposition is only applied when the constraints are satisfied         |
+| Where used | Effect of constraint                                                            |
+|------------|---------------------------------------------------------------------------------|
+| `cls`      | Class can only be instantiated with satisfied constraints.                      |
+| `fun`      | Function can only be called with satisfied constraints (in overload selection). |
+| `sup`      | The superimposition is only applied when the constraints are satisfied.         |
+
+### Specialization
+- See [function specialization]().
+
+## Residual types
+- Residual types are types that superimpose `std.Try[Pass, Fail]`.
+- There are additional syntactic options for residual types.
+- Commonly used residual types:
+  - `std.Opt[Type]       -> std.Try[Type, Void]`
+  - `std.Ret[Pass, Fail] -> std.Try[Pass, Fail]`.
+
+### The `std.Opt[Type]` type
+- Has an explicit nullable fail state.
+- Constructed with `std.some(value)` or `std.none()`.
+- Unwrapping an `std.Opt[Type]` that is in the nullable state causes an abort.
+
+### The `std.Ret[Pass, Fail]` type
+- Has an explicit success and error state.
+- Constructed with `std.pass(value)` or `std.fail(error)`.
+- Unwrapping a `std.Ret[Pass, Fail]` that is in the error state causes an abort.
+- Unwrapping the error of a `std.Ret[Pass, Fail]` that is in the success state causes an abort.
+
+### The `?` postfix operator
+- Requires the type being operated on to be a [residual type](#residual-types).
+- If the value is in the residual state, the function will immediately return the wrapped error.
+- If the value is in the success state then the function continues.
+
+### The `??` null coalescing binary operator
+- Requires the type being operated on to be a [residual type](#residual-types).
+- Acts as shorthand for `std.Try.unwrap_or(value, default_value)`.
+
+### The `let` statement
+- See [variable declaration residual blocks](4-Variables.md#residual-blocks) for more.
 
 ## Booleans
 - The `Bool` type is the only boolean type in S++.

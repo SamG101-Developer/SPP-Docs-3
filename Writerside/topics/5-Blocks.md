@@ -222,3 +222,7 @@ while num < 10 {
 ### Control flow
 - No `break` statement
 - No `continue` statement
+
+
+## Residual blocks
+- See [variable declaration residual blocks](4-Variables.md#residual-blocks) for more.
