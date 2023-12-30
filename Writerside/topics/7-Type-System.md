@@ -6,6 +6,7 @@
 - [Type inference](#type-inference)
 - [Aliasing](#aliasing)
 - [Namespace reduction](#namespace-reduction)
+- [Casting](#casting)
 - [Booleans](#booleans)
 - [Strings](#strings)
 - [Numbers](#numbers)
@@ -78,6 +79,7 @@
 
 ### Aliasing syntax
 - The syntax for aliasing is `use OldName as NewName`.
+- With generics, the syntax is `use [T] Map[T, Str] as NewName`.
 
 ## Namespace reduction
 - Namespace reduction is similar to aliasing, but is used to reduce the length of a namespace, and doesn't require an 
@@ -87,6 +89,102 @@
 ### Namespace reduction syntax
 - The syntax for namespace reduction is `use a.b.c.{d.e.F as G, H, I as J}`.
 - To use everything from a namespace, use `use a.b.c.*`.
+
+## Casting
+### Type casting
+- Casting has no explicit keyword, because function calls can do the same thing.
+- To normalize all casting, the `From[T]` class can be superimposed per type being cast _from_.
+- The method `fun from (self, that: T) -> Self` is overridden for each `From` superimposition.
+- The `In` type on the `From` type is the type being cast _from_. 
+
+#### Type casting example
+```s++
+use std.ops.From
+
+cls Foo {
+    a: Num
+    b: Num
+}
+
+sup From[Foo] on Str {
+    fun from(self, that: Self.In) -> Self {
+        ret "${that.a}, ${that.b}"
+    }
+}
+
+fun main() -> Void {
+    let foo = Foo { a=1, b=2 }
+    let foo_str = Str.from(foo)
+    std.assert(foo_str == "1, 2")
+}
+```
+
+### Hierarchical casting
+- There type system is so strong that there is no implicit upcasting.
+- Requires explicit upcast and downcast methods on the `std.Inherit` class.
+
+#### Hierarchical casting example
+```s++
+@inheritable
+cls Foo {
+    a: Num
+    b: Num
+}
+
+sup Bar on Foo {
+    c: Num
+}
+
+fun main() -> Void {
+    let bar = Bar { c=3 }
+    let foo = Foo { a=1, b=2, sup=(bar,) }
+    let foo_bar = foo.upcast[Bar]()
+    let bar_foo = foo_bar.downcast[Foo]().unwrap()
+}
+```
+
+## Generics
+- Generics can be specified on functions, classes, superimpositions & type-aliases.
+- Generics allow for a type to be used with any type, and can be constrained.
+- Generics that can be inferred can not be explicitly specified, as the compiler will infer the type.
+
+### Generic parameter classifications
+#### Required
+- A generic parameter is required if a default type isn't provided.
+- Inferrable required generic type parameters **must** follow other required generic parameters.
+
+#### Optional
+- A generic parameter is optional if a default type is provided.
+- Optional type parameters can be omitted when instantiating the type.
+- To give a value for the optional type parameter, a [named type argument]() must be used.
+- Must follow required type parameters.
+
+#### Variadic
+- A generic parameter is variadic if it is prefixed with the `..` token.
+- Variadic type parameters can be omitted when instantiating the type.
+- A parameter with the variadic generic can be `n` number of parameters.
+- Multiple variadic generic parameters can be specified, because **every** variadic generic parameter **must** be 
+  inferrable (as a generic parameter or part of another type's constraints).
+
+### Usages & inference
+
+| Where used | Inferrable when...         |
+|------------|----------------------------|
+| `cls`      | Used in an attribute type. |
+| `fun`      | Used in a parameter type.  |
+| `sup`      | N/A                        |
+- Generics are **always** inferrable if they appear in the constraint of another generic.
+- Generics are **always** inferrable if they are optional (ie the default generic type argument is used).
+- Inferrable generic parameters must be in the [required classification](#required) syntactically, ie not [optional](#optional).
+
+### Generic constraints
+- Short-hand or long-hand syntax can be used for generic constraints.
+
+| Where used | Effect of constraint                                                           |
+|------------|--------------------------------------------------------------------------------|
+| `cls`      | Class can only be instantiated with satisfied constraints                      |
+| `fun`      | Function can only be called with satisfied constraints (in overload selection) |
+| `sup`      | The superimposition is only applied when the constraints are satisfied         |
 
 ## Booleans
 - The `Bool` type is the only boolean type in S++.
