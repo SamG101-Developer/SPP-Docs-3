@@ -8,6 +8,8 @@
 - [Namespace reduction](#namespace-reduction)
 - [Casting](#casting)
 - [Generics](#generics)
+- [Residual types](#residual-types)
+- [Union types + flow typing](#union-types)
 - [Booleans](#booleans)
 - [Strings](#strings)
 - [Numbers](#numbers)
@@ -219,6 +221,34 @@ fun main() -> Void {
 
 ### The `let` statement
 - See [variable declaration residual blocks](4-Variables.md#residual-blocks) for more.
+
+## Union types
+- [Tagged union without syntactic wrapping](https://soc.me/languages/unions)
+- Union types are groups of types that are stored under a single type.
+- The `std.Var[..Types]` class that is formed is known to the compiler.
+- The `std.Var[..Types]` type can be combined with the `is` keyword.
+
+### Declaring a union type
+1. Named: `use T = Str | U16 | Bool`
+2. Anonymous: `fun function(a: U16 | F16)`
+
+### Assignment to a union type
+- Syntactic wrapping **is not** used for assignment to a union type.
+- This allows for an inner type to be pushed into the `Var` type easily.
+- This is different to not allowing automatic upcasting, because upcasting changes the type to a parent type where an 
+  _object_ of the upcast type is part of the main object, where-as with the `Var` type, the inner _type_ is part of the 
+  main type.
+
+### The `is` keyword with unions
+- The `is` keyword is used with pattern matching for union types.
+- Inner pattern blocks utilize [flow typing]() to treat the union as that specific type inside the block.
+- See [is-keyword pattern blocks](5-Blocks.md#union-type-decomposition) for more.
+
+### Flow typing
+- The object (of a union type) is treated as the type following the `is` keyword inside the block.
+- This means that no extra conversion is needed for every pattern.
+- If [multiple patterns](5-Blocks.md#multiple-conditions) are being combined with [union patterns](5-Blocks.md#union-type-decomposition), the
+  object is treated as a union of those specific types listed after the `is` keyword.
 
 ## Booleans
 - The `Bool` type is the only boolean type in S++.

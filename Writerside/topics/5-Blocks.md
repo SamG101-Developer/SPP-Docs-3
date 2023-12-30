@@ -142,18 +142,6 @@ let str = if num ==
 - The result of the comparison must result in a value of type `Bool`.
 - The `else` branch is taken if none of the other branches are matched with the comparison.
 
-#### Pattern guards
-```s++
-let num = 1
-let str = if num ==
-    1 && some_function() { "one" }
-    2 && some_function() { "two" }
-    else { "other" }
-```
-- Pattern guards can be used to further refine the conditions of a branch.
-- The result of the guard must be a value of type `Bool`.
-- The `&&` token is used to introduce a pattern guard.
-
 #### Union type decomposition
 ```s++
 use Pet = Cat | Dog | Fish
@@ -170,7 +158,19 @@ let str = if pet is
 - The `else` branch is not required, iff the pattern branch exhausts all types in the union.
 - Flow typing is used to treat the `pet` object as the compared type inside the scope of the pattern.
 
-#### Ternary mock
+### Pattern guards
+```s++
+let num = 1
+let str = if num ==
+    1 && some_function() { "one" }
+    2 && some_function() { "two" }
+    else { "other" }
+```
+- Pattern guards can be used to further refine the conditions of a branch.
+- The result of the guard must be a value of type `Bool`.
+- The `&&` token is used to introduce a pattern guard.
+
+### Ternary mock
 ```s++
 let num = 1
 let str = if num == 1 { "one" } else { "other" }
