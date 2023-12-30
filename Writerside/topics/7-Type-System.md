@@ -14,6 +14,7 @@
 - [Strings](#strings)
 - [Numbers](#numbers)
 - [Arrays](#arrays)
+- [Tuples](#tuples)
 
 ## Overview
 - Static & strong type-system is enforced, ensuring maximum safety.
@@ -359,3 +360,7 @@ sup [T] Arr[T] {
 }
 ```
 - Other classes are superimposed onto `Arr[T]`, adding more functionality.
+
+
+## Tuples
+- See the [tuples]() page.
