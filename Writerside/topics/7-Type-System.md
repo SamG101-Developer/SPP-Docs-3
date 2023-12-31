@@ -364,3 +364,12 @@ sup [T] Arr[T] {
 
 ## Tuples
 - See the [tuples]() page.
+
+## Void
+- The `Void` type is the only type that has no instances.
+- The `Void` type is used to represent the absence of a value.
+- The `Void` type is used as the return type of functions that do not return a value.
+
+### Parameter type of `Void`
+- Parameters that are the `Void` type are not parameters: they are removed from the signature.
+- This extends to generic parameters where the generic type is `Void`: the parameter doesn't exist for that overload.
