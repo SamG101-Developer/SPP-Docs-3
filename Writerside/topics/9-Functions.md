@@ -1,7 +1,7 @@
 # 9 - Functions
-- Functions are first class objects that map to the `Fun[Ref|Mut|One]` types.
 
 ## Contents
+- [Introduction](#introduction)
 - [Function declaration](#function-declaration)
 - [Function parameters](#function-parameters)
 - [Function return type](#function-return-type)
@@ -14,6 +14,9 @@
 - [Partial functions](#partial-functions)
 - [Coroutines](#coroutines)
 - [Asynchronous functions](#asynchronous-functions)
+
+## Introduction
+- Functions are first class objects that map to the `Fun[Ref|Mut|One]` types.
 
 ## Function declaration
 - Functions are declared with the `fun` keyword.
