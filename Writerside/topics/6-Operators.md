@@ -203,3 +203,9 @@ sup std.ops.Add[Rhs=Vector3D, Out=Vector3D] on Vector3D {
 - The other postfix operations are uniform operations across all classes.
 
 
+## Unary operators
+- S++ opts to not use unary operators, because for long expressions, their readability is reduced.
+- Also, left-to-right evaluation of expressions is more intuitive than right-to-left-to-right evaluation.
+- The expressions `while some_long_function_name().attrribute1.attribute2.not()` is clearer than 
+  `while !some_long_function_name().attribute1.attribute2`.
+- The `async` keyword for [asynchronous] function calls is technically "unary" but isn't an operator.

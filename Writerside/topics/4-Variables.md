@@ -4,6 +4,7 @@
 ### Initialized vs Uninitialized variable declarations
 - A variable can be declared as initialized or uninitialized.
 - A variable cannot be read from until it is initialized (assignment).
+- A variable must use snake_case (improves readability).
 
 #### Initialized example:
 - `let x = 123`
@@ -181,3 +182,7 @@ fun main() -> Void {
 }
 ```
 
+## Variable lifetimes
+- All variables are local variables, and are therefore only valid for the duration of the block they are declared in.
+- Variables that are owned objects can be returned or set to class attributes, extending their lifetime.
+- There are no global or static variables, as they are not safe, and are therefore not allowed.

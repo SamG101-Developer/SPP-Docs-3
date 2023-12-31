@@ -1,5 +1,6 @@
 # 3 - Keywords
-- S++ aims to use a small number of keywords, with re-use _generally_ limited to same-context usage.
+- S++ aims to use a small number of keywords, with re-use _generally_ limited to same-context usage (i.e `mut` can 
+  be used in a couple different places but always refers to the mutability of the value or borrow).
 
 #### `mod`
 - Declare a `.spp` file as a [module]() for the module tree to be included in the compilation.
