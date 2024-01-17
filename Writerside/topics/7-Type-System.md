@@ -61,8 +61,8 @@
 | `<LiteralRegex>`                  | `Rgx`                                                             |
 | `<Lambda>`                        | See [closure inference]()                                         |
 | `<ParenthesizedExpressioj>`       | Infers the type of `some_expression` and uses that.               |
-| `<IfExpression>`                  | Infers the final statement of each pattern block.                 |
-| `<WhileExpression>`               | Cannot be used on the RHS of an expression.                       |
+| `<CaseExpression>`                | Infers the final statement of each pattern block.                 |
+| `<LoopExpression>`                | Cannot be used on the RHS of an expression.                       |
 | `<YieldExpression>`               | Uses the `[Send]` generic parameter from `Gen[...]`.              |
 | `<InnerScope>`                    | Infers the final statement of the inner scope.                    |
 | `<WithExpression>`                | Infers the final statement of the block.                          |

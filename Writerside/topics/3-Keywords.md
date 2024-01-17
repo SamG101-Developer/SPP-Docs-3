@@ -29,8 +29,8 @@
 - Declare a parameter as [mutable](), by placing `mut` before the identifier.
 - Declare a borrow as [mutable](), by appending `mut` to the `&` symbol.
 
-#### `if`
-- Declare a conditional branch with the `if some_variable { ... }` syntax.
+#### `case`
+- Declare a conditional branch with the `case some_variable == true { ... }` syntax.
 - See [conditional blocks]() for more.
 
 #### `else`
@@ -38,8 +38,8 @@
 - Declare a [residual block]() for a [variable declaration]() of a [residual type]().
 - Declare a default object for [object initialization]().
 
-#### `while`
-- Declare a [conditional loop]() with the `while condition { ... }` syntax.
+#### `loop`
+- Declare a [conditional loop]() with the `loop condition { ... }` syntax.
 
 #### `with`
 - Declare a [context block] with the `with file = file.open(...) { ... }` syntax.
