@@ -3,226 +3,133 @@
 ## Blocks
 - Blocks group statements and expressions together in a new scope.
 - Blocks are always surrounded by `{` and `}` characters (non-optional, even for 1-line blocks).
-- Blocks can be empty, but must still be surrounded by `{` and `}` characters.
+- Blocks can be empty, but must still use the `{` and `}` characters.
 
 ### Where blocks are used (exhaustive list)
 - A block will be referred to as the type `Block[T]` where `T` is the type of the item in the block.
 
-| Where              | Block type              | Explanation                                                                    |
-|--------------------|-------------------------|--------------------------------------------------------------------------------|
-| `if` expression    | `Block[Pattern]`        | The `if` expression requires blocks of pattern blocks to form its body.        |
-| pattern blocks     | `Block[Statement]`      | The "pattern" expression requires a block of statements to form its body.      |
-| `while` expression | `Block[Statement]`      | The `while` expression requires a block of statements to form its <br/>body.   |
-| `while-else` block | `Block[Statement]`      | The `while-else` expression requires a block of statements to form its body.   |
-| `fun` block        | `Block[Statement]`      | The `fun` definition requires a block of statements to form its body.          |
-| `let-else` block   | `Block[Statement]`      | The `let-else` expression requires a block of statements to form its body.     |
-| inner scope        | `Block[Statement]`      | An inner scope is a block.                                                     |
-| `cls` block        | `Block[ClassAttribute]` | A class definition requires a block of class attributes to form its body.      |
-| `sup` block        | `Block[SupMember]`      | A superimposition block requires a block of methods/typedefs to form its body. |
-
-### Returning from blocks (for assignment)
-- If a block is being used for assignment (as en expression), then the final statement of the block is returned.
-- For example, in the following code, `x` is assigned the value of `y + z`:
-```s++
-fun main() -> Void {
-    let x = {
-        let y = 1
-        let z = 2
-        y + z
-    }
-}
-```
-
+| Where                      | Block type              |
+|----------------------------|-------------------------|
+| `case` expression patterns | `Block[Statement]`      |
+| `loop` expression          | `Block[Statement]`      |
+| `with` expression          | `Block[Statement]`      |
+| `case-else` block          | `Block[Statement]`      |
+| `loop-else` block          | `Block[Statement]`      |
+| `cls` block                | `Block[ClassAttribute]` |
+| `sup` block                | `Block[SupMember]`      |
+| `fun` block                | `Block[Statement]`      |
+| `let-else` block           | `Block[Statement]`      |
+| inner scope                | `Block[Statement]`      |
 
 ## Conditional blocks
-- The only conditional block in S++ is the `if` expression.
-- It combines the simplicity of an `if` expression with the power of pattern matching.
-- It also provides simple syntax such that a ternary operator is not required.
+### General
+- Conditional blocks are used to match a value against a number of patterns.
+- They use the `case` keyword to declare the conditional block.
+- They use the `else` keyword to declare the catch-all branch.
+- A `case` block merges the functionality of a standard `if`, `switch/match/case` and `?:` into a single construct.
+- As there are no `goto` statements, there is no different syntax for a `switch` statement, like in `C++`.
 
-### Assignment
-- If the `if` expression is used for assignment, then the return type of each branch must be the same.
-- An `else` branch must also be included for assignment, in case none of the other branches are taken.
-- For example, in the following code, `str` is assigned the value of the branch that is taken:
+### Assignment from conditional blocks
+- If the `case` expression is used for assignment, then the return type of each branch must be the same.
+- The return type is the type of the final expression in the branch.
+
 ```s++
-fun main() -> Void {
-    let num = 1
-    let str = if num ==
-        1 { "one" }
-        2 { "two" }
-        3 { "three" }
-        else { "unknown" }
-}
+let x = case num
+    == 1 { "one" }
+    == 2 { "two" }
+    == 3 { "three" }
+else { "unknown" }
+
+# x is of type Str
 ```
 
-### Different ways to use the `if` statement:
-#### Simple `==` comparison against a number of values
+### Different ways to use the `case` statement:
+#### Basics
 ```s++
-let num = 1
-let str = if num ==
-    1 { "one" }
-    2 { "two" }
-    3 { "three" }
-    else { "unknown" }
+case person
+    == john { "hello john" }
+    == jane { "hello jane" }
+else { "hello stranger" }
 ```
-- Allows each branch's value to be compared against the partial function `my_number ==`
-- The result of the `==` method being used must result in a value of type `Bool`.
-- The `else` branch is taken if none of the other branches are matched with the `==`.
 
-#### Different comparison operators
+#### Ternary
 ```s++
-let num = 1
-let str = if num
-    < 1 { "less than one" }
-    > 1 { "greater than one" }
-    else { "one" }
+let x = case person == join { "hello john" } else { "hello stranger" }
 ```
-- Allows the condition `num` to be applied against each branch's partial function.
-- The result of the comparison must result in a value of type `Bool`.
-- The `else` branch is taken if none of the other branches are matched with the comparison.
 
-#### Extending operators to methods / attributes
+#### Pattern matching
 ```s++
-let num = 1
-let str = if num
-    .is_even() { "even" }
-    .is_odd() { "odd" }
-    else { "impossible" }
+case person
+    == Person { name="john", .. } { "hello john" }
+    == Person { name="jane", .. } { "hello jane" }
+else { "hello stranger" }
 ```
-- As `num ==` is the same as `num.eq()`, the `if` expression can be used to call any method.
-- The result of the method must result in a value of type `Bool`.
-- The `else` branch is taken if none of the other branch's methods return `true`.
+```s++
+case tuple
+    == (1, 2) { "tuple is (1, 2)" }
+    == (3, 4) { "tuple is (3, 4)" }
+else { "tuple is something else" }
+```
 
-#### Destructuring
+#### Bindings
 ```s++
-let num = (2, 4, 6)
-let str = if num ==
-    (1, 2, 3) { "one" }
-    (1, _, _) { "one" }
-    (..other, 2) { "two" }
-    (x, .._) { "other" }
-    else { "other" }
+case person
+    == Person { name="john", age, .. } { "hello john, you are " + age + " years old" }
+    == Person { name="jane", age, .. } { "hello jane, you are " + age + " years old" }
+else { "hello stranger" }
 ```
 ```s++
-let vec = Vector3D {x=1, y=2, z=3}
-let str = if vec ==
-    Vector3D {x=1, y=1, z=1} { "unit" }  # Check variable values for equality
-    Vector3D {x=1, ..} { "x" }           # Skip unwanted variable values
-    Vector3D {y=1, y, z} { "y" }         # Save variable values to new variables
-    else { "other" }
+case tuple
+    == (a, 1) { "tuple is ($a, 1)" }
+    == (b, 2) { "tuple is ($b, 2)" }
+else { "tuple is something else" }
 ```
-- The `if` expression can be used to de-structure variables, into tuples or their class.
-- The result of the comparison must result in a value of type `Bool`.
-- The `else` branch is taken if none of the other branches are matched with the comparison.
 
-#### Nested destructuring
+#### Partial conditions
 ```s++
-let velocity = Velocity {dir=Vector3D{x=1, y=0, z=0}, speed=1}
-let str = if velocity ==
-    Velocity {dir=Vector3D{x=1, y=0, z=0}, ..} { "forward" }
-    Velocity {dir=Vector3D{x=0, y=1, z=0}, ..} { "up" }
-    Velocity {dir=Vector3D{x=0, y=0, z=1}, ..} { "right" }
-    Velocuty {.., speed=0} { "stationary" }
-    Vecocity {dir, speed} { "non-unit direction at ${speed}m/s" }
-    else { "unknown" }
+case person ==
+    Person { name="john", .. } { "hello john" }
+    Person { name="jane", .. } { "hello jane" }
+else { "hello stranger" }
 ```
-- Nest destructuring for fields of a class.
-- Tuples, object initialization, and variables can be mixed.
-- The result of the comparison must result in a value of type `Bool`.
-- The `else` branch is taken if none of the other branches are matched with the comparison.
+
+#### Guards
+```s++
+case person
+    == Person { name="john", age, .. } && age > 18 { "hello john, you are " + age + " years old" }
+    == Person { name="jane", age, .. } && age > 18 { "hello jane, you are " + age + " years old" }
+else { "hello stranger" }
+```
 
 #### Multiple conditions
 ```s++
-let num = 1
-let str = if num ==
-    1 | 2 | 3 { "one" }
-    4 | 5 | 6 { "two" }
-    else { "other" }
+case person
+    == john | jane { "hello john or jane" }
+    == jack | jill { "hello jack or jill" }
+else { "hello stranger" }
 ```
-- Multiple conditions can be used on a single branch, separated by `|`.
-- The result of the comparison must result in a value of type `Bool`.
-- The `else` branch is taken if none of the other branches are matched with the comparison.
 
-#### Union type decomposition
+#### Unrelated conditions
 ```s++
-use Pet = Cat | Dog | Fish
-let pet = Cat.new().to_union[Pet]()
-
-let str = if pet is
-    Cat { "cat" }
-    Dog { "dog" }
-    Fish { "fish" }
-    else { "impossible" }
+case true {
+    func1().attribute1 > 4 { "func1 returned true" }
+    func2().attribute2 < 5 { "func2 returned true" }
+else { "both returned false" }
 ```
-- Because the `is` keyword is a comparison operator, it can be used in the `if` expression.
-- A union type can be matched to its constituent types using the `is` operator.
-- The `else` branch is not required, iff the pattern branch exhausts all types in the union.
-- Flow typing is used to treat the `pet` object as the compared type inside the scope of the pattern.
-
-### Pattern guards
-```s++
-let num = 1
-let str = if num ==
-    1 && some_function() { "one" }
-    2 && some_function() { "two" }
-    else { "other" }
-```
-- Pattern guards can be used to further refine the conditions of a branch.
-- The result of the guard must be a value of type `Bool`.
-- The `&&` token is used to introduce a pattern guard.
-
-### Ternary mock
-```s++
-let num = 1
-let str = if num == 1 { "one" } else { "other" }
-```
-- The `if` expression can be used as a mock ternary operator.
-- The `else` branch is required for ternary expressions.
-
 
 ## Loop blocks
-- The only loop block in S++ is the `while` expression.
+### General
+- The only loop block in S++ is the conditional `loop` expression.
 - There is no `for` loop, as internal iteration is the only way to iterate over a collection: [Streaming API]().
+- The `loop` expression is modelled & parsed as an expression but can never be used for assignment.
+- The condition must evaluate to the `Bool` type.
+- The `else` bock can be added for if the `loop` condition is `false` on the first iteration.
 
-### Structure
-- The `while` loop is modelled and parsed as an expression, but can not be used for assignment.
-- The `while` loop required a condition following the `while` keyword, which must evaluate to the `Bool` type.
-- Multiple statements, inside a new block, make up the body for the while loop.
-- An optional `else` branch can be included, which is executed if the condition is `false` on the first iteration of 
-  the loop.
-
-### Infinite loop detection
-- If no condition-variables are mutated in the loop's body, then the loop is infinite, or never executed.
+### Infinite looping detection
+- If there are no condition-variables or no condition-variables are mutated in the loop's body, then the loop is 
+  infinite, or never executed.
 - Any non-pure function calls in the loop's condition are un-analyzable, so the loop is assumed to be finite.
 
-### The `while-else` block
-- The `else` branch is executed if the condition is `false` on the first iteration of the loop.
-- Removes the requirement for an `[if-while]-else` block, as the `else` branch can be used instead.
-
-#### `while-else` example:
-```s++
-let mut num = 0
-if num < 10 {
-    while num < 10 {
-        num += 1
-    }
-} else {
-    num = 0
-}
-```
-becomes:
-```s++
-let mut num = 0
-while num < 10 {
-    num += 1
-} else {
-    num = 0
-}
-```
-
 ### Control flow
-- No `break` statement
-- No `continue` statement
-
-
-## Residual blocks
-- See [variable declaration residual blocks](4-Variables.md#residual-blocks) for more.
+- No `break` statement.
+- No `continue` statement.
