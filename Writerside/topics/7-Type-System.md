@@ -181,6 +181,9 @@ fun main() -> Void {
 - Generics are **always** inferrable if they are optional (ie the default generic type argument is used).
 - Inferrable generic parameters must be in the [required classification](#required) syntactically, ie not [optional](#optional).
 
+#### Special case for `Void`
+- If a parameter type is a generic, whose type is `Void`, the parameter is removed from the function signature.
+
 ### Generic constraints
 - Short-hand or long-hand syntax can be used for generic constraints.
 
