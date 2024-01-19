@@ -2,6 +2,7 @@
 - S++ aims to use a small number of keywords, with re-use _generally_ limited to same-context usage (i.e `mut` can 
   be used in a couple different places but always refers to the mutability of the value or borrow).
 
+### Module level declarations
 #### `mod`
 - Declare a `.spp` file as a [module]() for the module tree to be included in the compilation.
 - The module name must reflect the directory/file structure up-to and including the `src` folder.
@@ -21,6 +22,7 @@
 - Declare a [type alias]() with the `use OldType as NewType` syntax.
 - Declare a [namespace reduction]() type with the `use a.b.c.{d.e.F as G, H, I as J}`
 
+### Variable declarations
 #### `let`
 - Declare a [variable]() (defaulting to immutable) with the `let x = 123` syntax.
 
@@ -29,6 +31,7 @@
 - Declare a parameter as [mutable](), by placing `mut` before the identifier.
 - Declare a borrow as [mutable](), by appending `mut` to the `&` symbol.
 
+### Control flow
 #### `case`
 - Declare a conditional branch with the `case some_variable == true { ... }` syntax.
 - See [conditional blocks]() for more.
@@ -44,13 +47,17 @@
 #### `with`
 - Declare a [context block] with the `with file = file.open(...) { ... }` syntax.
 
+
+### Control flow exit
 #### `ret`
 - [Return]() a value out of a [function]() and to the caller context.
 
-#### `yield`
-- [Yield]() a value, with an optional convention, out of a [function]() and to the caller context.
+#### `gen`
+- [Generate]() a value, with an optional convention, out of a [function]() and to the caller context.
+- This is the same as "yielding" in most languages. The coroutine is resumed when the value is requested.
 - Control is guaranteed to return to ths context, so yielding borrows it allowed.
 
+### Type helpers
 #### `where`
 - Declare constraints for generic types with the `... where [X, Y: Copy & Default] { ... }` syntax.
 
@@ -61,6 +68,7 @@
 - Used in type aliasing contexts, see [the `use` keyword](#use).
 - **Not used for any type casting.**
 
+### Types
 #### `true`,`false`
 - Represent program-long boolean constants.
 
@@ -70,6 +78,7 @@
 #### `Self` (type)
 - Used to refer to the current _type_ of a class, from inside a `cls` or `sup` block.
 
+### Misc
 #### `on`
 - Used with the `sup` keyword for superimposition of a class over another class.
 - Uses the `sup Copy on Str` syntax to superimpose a class _on_ another class.
