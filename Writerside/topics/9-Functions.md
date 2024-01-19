@@ -308,7 +308,7 @@ let z = fun (a: Num) with [&x, &y] -> Num { a + x + y }
 ## Coroutines
 - Coroutines are functions that can be suspended and resumed as a later point in the program.
 - Coroutines are declared in the same way as functions, with 0 syntactic differences.
-- A function becomes a coroutine when 1+ `yield` statements are present in the function body, like Python.
+- A function becomes a coroutine when 1+ `gen` statements are present in the function body, like Python.
 - Coroutines must return the `std.Gen[Yield, Ret=Void, Send=Void]` type.
 - **Note that coroutines are generators.**
 - **Note that coroutines are not (necessarily) asynchronous functions.**
@@ -316,24 +316,24 @@ let z = fun (a: Num) with [&x, &y] -> Num { a + x + y }
 ### Out
 #### Yielding from a coroutine
 - Values whose type matches the `Yield` type parameter can be yielded from a coroutine.
-- Values are yielded with the syntax `yield "123"`.
+- Values are yielded with the syntax `gen "123"`.
 - Yielded values can be borrows, because control is guaranteed to return to the coroutine before it is destroyed.
 - **TODO: yielding borrows required the ret type to be Gen[Yield=Ref[Str]]?**
 
 #### Returning from a coroutine
 - A coroutine can have a `ret` statement, which returns a value from the coroutine.
 - Returning a value stops the `.next()` method from returning any more values in the pass state.
-- If the `Ret` type is `Void`, a `ret` statement is not required, but any code after the final `yield` will be executed.
+- If the `Ret` type is `Void`, a `ret` statement is not required, but any code after the final `gen` will be executed.
 
 ### In
 #### Sending to a coroutine
 - Values whose type matches the `Send` type parameter can be sent to a coroutine.
 - Values are sent to the coroutine with the syntax `coroutine_name.next("Hello")`.
-- The values are received by the coroutine with `let x = yield 100`: `x` is `"Hello"`.
+- The values are received by the coroutine with `let x = gen 100`: `x` is `"Hello"`.
 - Because `Send` defaults to `Void`, the `next` method does not often require an argument.
 
 ### Chaining coroutines
-- Coroutines can be chained together using the `yield with` statement.
+- Coroutines can be chained together using the `gen with` statement.
 - This is most commonly seen in yielding out of 1 generator and into another.
 
 ## Asynchronous functions

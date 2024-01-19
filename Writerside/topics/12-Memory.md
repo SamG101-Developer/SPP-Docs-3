@@ -13,7 +13,7 @@
 - All memory errors that could (not will) occur are caught at compile time (being too careful > missing some errors).
 
 ## 2nd class borrows
-- Borrows to an object can only be taken at function call sites, or `yield` statements.
+- Borrows to an object can only be taken at function call sites, or `gen` statements.
 - Borrows cannot be returned, or stored in class attributes (extending their lifetime).
 - Borrows can always be stored on the stack, improving performance and automatically releasing.
 
