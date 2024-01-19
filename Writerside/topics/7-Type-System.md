@@ -181,9 +181,6 @@ fun main() -> Void {
 - Generics are **always** inferrable if they are optional (ie the default generic type argument is used).
 - Inferrable generic parameters must be in the [required classification](#required) syntactically, ie not [optional](#optional).
 
-#### Special case for `Void`
-- If a parameter type is a generic, whose type is `Void`, the parameter is removed from the function signature.
-
 ### Generic constraints
 - Short-hand or long-hand syntax can be used for generic constraints.
 
@@ -195,6 +192,7 @@ fun main() -> Void {
 
 ### Specialization
 - See [function specialization]().
+
 
 ## Residual types
 - Residual types are types that superimpose `std.Try[Pass, Fail]`.
@@ -372,6 +370,7 @@ sup [T] Arr[T] {
 - The `Void` type is the only type that has no instances.
 - The `Void` type is used to represent the absence of a value.
 - The `Void` type is used as the return type of functions that do not return a value.
+- The `Void` type cannot be used as a generic argument (the 0-tuple can however).
 
 ### Parameter type of `Void`
 - Parameters that are the `Void` type are not parameters: they are removed from the signature.
